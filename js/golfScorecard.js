@@ -22,7 +22,6 @@ $(document).ready(function() {
             $("#courseSelect").append("<option value='" + closeCourses.courses[p].id + "'>" + closeCourses.courses[p].name + "</option>");
         }
     });
-
 });
 
 function loadCourse(theid) {
@@ -69,30 +68,41 @@ for(var i = 0, h = 18; i < h; i++){
  *   Create a way to add players
  -------------------------------------------*/
 
-var myPlayer = 0;
+var playerNumber = 0;
+var playerAmount = 0;
 var itemNumber = 0;
 var leftCard;
+var errBool = false;
 
 function addPlayer(){
-    //Create the players themselves
+    if(playerAmount > 5){
+        if(!errBool){
+            $("#cardContainer").append("<p class='errorMessage' style='color: red;'>* Cannot add more than 6 players.</p>");
+            errBool = true;
+        }
+    } else {
 
-    leftCard = $("#leftCard").html();
-    if(leftCard == "Click \"Add a Player\" to add players."){
-        myPlayer = 0;
-    }
-    if(myPlayer == 0){
-        $("#leftCard").html("");
-    }
-    $("#leftCard").append("<div class='player' id='playerLabel" + myPlayer + "'>Player " + (myPlayer + 1) + "<span class='glyphicon glyphicon-minus-sign' onclick='removePlayer("+ myPlayer +")'></span></div>");
+        //Create the players themselves
 
-    // Create the rows associated with those players
+        leftCard = $("#leftCard").html();
+        if (leftCard == "Click \"Add a Player\" to add players.") {
+            playerNumber = 0;
+        }
+        if (playerNumber == 0) {
+            $("#leftCard").html("");
+        }
+        $("#leftCard").append("<div class='player' id='playerLabel" + playerNumber + "'>Player " + (playerNumber + 1) + "<span class='glyphicon glyphicon-minus-sign' onclick='removePlayer(" + playerNumber + ")'></span></div>");
 
-    $("#input").append("<tr id='row" + myPlayer + "'></tr>");
-    for(var i = 0, h = 20; i <= h; i++){
-        $("#row" + myPlayer).append("<td class='dataItem' id='dataItem" + itemNumber + "'>Test</td>");
-        itemNumber++;
+        // Create the rows associated with those players
+
+        $("#input").append("<tr id='row" + playerNumber + "'></tr>");
+        for (var i = 0, h = 20; i <= h; i++) {
+            $("#row" + playerNumber).append("<td class='dataItem' id='dataItem" + itemNumber + "'>Test</td>");
+            itemNumber++;
+        }
+        playerNumber++;
+        playerAmount++;
     }
-    myPlayer++;
 }
 
 function changeName() {
@@ -104,9 +114,13 @@ function changeName() {
 
 
 function removePlayer(theid) {
+    if(playerAmount <= 6){
+        $(".errorMessage").remove();
+        errBool = false;
+    }
     $("#playerLabel" + theid).remove();
     $("#row" + theid).remove();
-    myPlayer--;
+    playerAmount--;
     if($("#leftCard").html() == ""){
         $("#leftCard").html("Click \"Add a Player\" to add players.");
         itemNumber = 0;

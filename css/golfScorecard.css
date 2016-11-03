@@ -76,7 +76,8 @@ table {
 .dataItem, .tableHeader {
     font-size: 12px;
     margin: 15px;
-    padding: 15px;
+    padding: 15px 12px !important;
+    text-align: center;
 }
 
 .tableHeader {
