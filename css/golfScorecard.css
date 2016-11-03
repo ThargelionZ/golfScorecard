@@ -1,0 +1,150 @@
+
+/*-------------------------------------------
+*   Basic Reset
+-------------------------------------------*/
+
+body {
+    background-image: url(../images/golf.jpg);
+    background-attachment: fixed;
+    /*background: #05B5FF;*/
+}
+
+h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+/*-------------------------------------------
+*   Heading Content
+-------------------------------------------*/
+
+h1 {
+    background-color: black;
+    color: white;
+    font-family: Centaur, Arial, "Times New Roman";
+    padding: 20px 25px;
+}
+
+#container {
+    width: 90%;
+    margin: 20px auto;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding-bottom: 50px;
+}
+
+#golfCourseImage {
+    width: 100%;
+    clip: rect(500px, 0px, 500px, 0px);
+}
+
+/*-------------------------------------------
+*   Card Content
+-------------------------------------------*/
+
+#cardContainer {
+    width: 90%;
+    margin: 20px auto;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+#card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#leftCard {
+    font-family: Centaur, Arial, "Times New Roman";
+    margin: 35px 0 0 0;
+    border-radius: 4px;
+    padding: 70px 15px;
+}
+
+#rightCard {
+    font-family: Centaur, Arial, "Times New Roman";
+    margin: 35px 100px 0 0;
+    border-radius: 4px;
+    padding: 0px 15px;
+}
+
+table {
+    border-spacing: 20px;
+}
+
+.dataItem, .tableHeader {
+    font-size: 12px;
+    margin: 15px;
+    padding: 15px;
+}
+
+.tableHeader {
+    overflow: hidden;
+}
+
+.modalBackground {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+#modal {
+    display: none;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    margin: auto;
+    left: 0; right: 0; top: 0; bottom: 0;
+    border-radius: 4px;
+    background-color: #FFF;
+}
+
+/*-------------------------------------------
+*   Anchor Tags
+-------------------------------------------*/
+
+a {
+    color: black;
+    display: block;
+    background-color: #05B5FF;
+    border-radius: 20px;
+    font-family: Centaur, Arial, "Times New Roman";
+    height: 50px;
+    margin: auto 94px;
+    padding-top: 12px;
+    text-align: center;
+    text-decoration: none;
+    width: 200px;
+}
+
+a:hover, a:visited, a:active, a:focus {
+    color: inherit;
+    text-decoration: none;
+}
+
+.player {
+    margin-bottom: 40px;
+}
+
+.player:last-child {
+    margin: 0;
+}
+
+.glyphicon-minus-sign {
+    color: red;
+    padding-top: 2px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.glyphicon-plus-sign {
+    color: green;
+    padding-top: 2px;
+    padding-left: 10px;
+}
