@@ -30,7 +30,7 @@ h1 {
     margin: 20px auto;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.9);
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
 #golfCourseImage {
@@ -38,9 +38,41 @@ h1 {
     clip: rect(500px, 0px, 500px, 0px);
 }
 
+#courseTitle {
+    margin: 25px;
+}
+
+#courseSelectLabel {
+    margin-left: 25px;
+}
+
+#courseSelect {
+    margin-left: 10px;
+}
+
+#teeTypesLabel {
+    margin-left: 25px;
+}
+
+#teeTypes {
+    margin-left: 10px;
+}
+
+#chooseWarning{
+    margin: 25px 10px;
+}
+
 /*-------------------------------------------
 *   Card Content
 -------------------------------------------*/
+
+#scorecardTitle {
+    padding: 25px 41px;
+}
+
+#changeNameMessage {
+    padding: 0 0 20px 44px;
+}
 
 #cardContainer {
     width: 90%;
@@ -57,9 +89,9 @@ h1 {
 
 #leftCard {
     font-family: Centaur, Arial, "Times New Roman";
-    margin: 35px 0 0 0;
+    margin: 17px 0 0 30px;
     border-radius: 4px;
-    padding: 70px 15px;
+    padding: 78px 15px 0 15px;
 }
 
 #rightCard {
@@ -67,70 +99,34 @@ h1 {
     margin: 35px 100px 0 0;
     border-radius: 4px;
     padding: 0px 15px;
+    width: 85%;
 }
 
 table {
+    background-color: white;
     border-spacing: 20px;
 }
 
-.dataItem, .tableHeader {
-    font-size: 12px;
-    margin: 15px;
-    padding: 15px 12px !important;
-    text-align: center;
-}
-
 .tableHeader {
-    overflow: hidden;
-}
-
-.modalBackground {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 1;
-}
-
-#modal {
-    display: none;
-    width: 300px;
-    height: 300px;
-    position: absolute;
-    margin: auto;
-    left: 0; right: 0; top: 0; bottom: 0;
-    border-radius: 4px;
-    background-color: #FFF;
-}
-
-/*-------------------------------------------
-*   Anchor Tags
--------------------------------------------*/
-
-a {
-    color: black;
-    display: block;
-    background-color: #05B5FF;
-    border-radius: 20px;
-    font-family: Centaur, Arial, "Times New Roman";
-    height: 50px;
-    margin: auto 94px;
-    padding-top: 12px;
+    font-size: 12px;
+    padding: 10px !important;
     text-align: center;
-    text-decoration: none;
-    width: 200px;
+    vertical-align: middle !important;
 }
 
-a:hover, a:visited, a:active, a:focus {
-    color: inherit;
-    text-decoration: none;
+.dataItem {
+    font-size: 12px;
+    padding: 0 !important;
+    text-align: center;
+}
+
+.input {
+    text-align: center;
+    width: 100%;
 }
 
 .player {
-    margin-bottom: 40px;
+    margin-bottom: 3px;
 }
 
 .player:last-child {
@@ -148,4 +144,53 @@ a:hover, a:visited, a:active, a:focus {
     color: green;
     padding-top: 2px;
     padding-left: 10px;
+}
+
+#errorMessage {
+    padding: 0 0 0 42px;
+}
+
+/*.modalBackground {*/
+    /*display: none;*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*background-color: rgba(0, 0, 0, 0.4);*/
+    /*z-index: 1;*/
+/*}*/
+
+/*#modal {*/
+    /*display: none;*/
+    /*width: 300px;*/
+    /*height: 300px;*/
+    /*position: absolute;*/
+    /*margin: auto;*/
+    /*left: 0; right: 0; top: 0; bottom: 0;*/
+    /*border-radius: 4px;*/
+    /*background-color: #FFF;*/
+/*}*/
+
+/*-------------------------------------------
+*   Anchor Tags
+-------------------------------------------*/
+
+a {
+    color: black;
+    display: block;
+    background-color: #05B5FF;
+    border-radius: 20px;
+    font-family: Centaur, Arial, "Times New Roman";
+    height: 50px;
+    margin: auto 44px;
+    padding-top: 12px;
+    text-align: center;
+    text-decoration: none;
+    width: 200px;
+}
+
+a:hover, a:visited, a:active, a:focus {
+    color: inherit;
+    text-decoration: none;
 }
