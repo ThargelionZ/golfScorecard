@@ -13,8 +13,9 @@
     <img id="golfCourseImage" alt="Golf Course Image" src="images/golfCourseWide.png">
     <h2 id="courseTitle">Choose Your Location</h2>
     <label id="courseSelectLabel">Golf Course:</label><select id="courseSelect" onchange="loadCourse(this.value)"><option>-</option></select>
-    <label id="teeTypesLabel">Tee Type:</label><select id="teeTypes"><option>-</option></select>
-    <p id="chooseWarning"><em>* Must choose a course before selecting tee type or starting your Golf Card.</em></p>
+    <label id="teeTypesLabel">Tee Type:</label><select id="teeTypes" onchange="loadTee()"><option>-</option></select>
+    <label id="holeAmountLabel">Holes:</label><select id="holeAmount" onchange="loadHole()"><option>-</option></select>
+    <p id="chooseWarning"><em>* Must choose a course before selecting tee type or hole amount.</em></p>
 </div>
 
 <!--<a href="javascript: addPlayer()">Add a Player<span class="glyphicon glyphicon-plus-sign"></span></a>-->

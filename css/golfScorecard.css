@@ -58,8 +58,16 @@ h1 {
     margin-left: 10px;
 }
 
-#chooseWarning{
-    margin: 25px 10px;
+#holeAmountLabel {
+    margin-left: 25px;
+}
+
+#holeAmount {
+    margin-left: 10px;
+}
+
+#chooseWarning {
+    margin: 25px;
 }
 
 /*-------------------------------------------
@@ -77,6 +85,7 @@ h1 {
 #cardContainer {
     width: 90%;
     margin: 20px auto;
+    padding-bottom: 30px;
     border-radius: 4px;
     background-color: rgba(255, 255, 255, 0.9);
 }
@@ -148,6 +157,11 @@ table {
 
 #errorMessage {
     padding: 0 0 0 42px;
+}
+
+.selectCourseError {
+    margin-top: 20px;
+    margin-left: 45px;
 }
 
 /*.modalBackground {*/
