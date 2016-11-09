@@ -11,19 +11,40 @@
 *   Pulling in Golf JSON Object
 -------------------------------------------*/
 
-var myLocation = {latitude: 40.4426135, longitude: -111.8631116, radius: 100};
+var lon, lat;
 var closeCourses;
 var selectedCourse;
 var numberOfHoles;
+var options = {
+    enableHighAccuracy: true
+};
 
-$(document).ready(function() {
-    $.post("http://golf-courses-api.herokuapp.com/courses/", myLocation, function(data, status){
-        closeCourses = JSON.parse(data);
-        for(i in closeCourses.courses){
-            $("#courseSelect").append("<option value='" + closeCourses.courses[i].id + "'>" + closeCourses.courses[i].name + "</option>");
-        }
+// Getting the original simplified course data for course id
+
+navigator.geolocation.getCurrentPosition(function(position) {
+
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    var userPosition = {
+        latitude: lat,
+        longitude: lon
+    };
+
+    $(document).ready(function () {
+        $.post("http://golf-courses-api.herokuapp.com/courses/", userPosition, function(data, status){
+            closeCourses = JSON.parse(data);
+            for(i in closeCourses.courses){
+                $("#courseSelect").append("<option value='" + closeCourses.courses[i].id + "'>" + closeCourses.courses[i].name + "</option>");
+            }
+        });
     });
-});
+}, error, options);
+
+function error() {
+    console.log("Failure...");
+}
+
+// Getting the full course data for all courses specific to the id
 
 var courseValue = $("#courseSelect").find(":selected").text();
 
@@ -50,9 +71,12 @@ function loadCourse(theid) {
     });
 }
 
+// Have the page react based on the amount of holes
+
 var holeValue;
 
 function loadHole() {
+    resetCard();
     holeValue = $("#holeAmount").find(":selected").val();
     if(holeValue == "9 Holes"){
         numberOfHoles = 9;
@@ -60,10 +84,9 @@ function loadHole() {
     else if(holeValue == "18 Holes") {
         numberOfHoles = 18;
     }
-    else {
-        numberOfHoles = undefined;
-    }
 }
+
+// Have the yardage, par, and hadicap react to the teeValue
 
 var teeValue;
 
@@ -81,13 +104,16 @@ var itemNumber = 0;
 var leftCard;
 var errMaxPlayers = false;
 var init = false;
+$("#rightCard").css("display", "none");
 
 function addPlayer(){
     if(courseValue == "-"){
         resetCard();
-        $("#cardContainer").append("<p class='selectCourseError' style='color: red;'>*Must select a Course before adding a player!</p>");
+        $("#rightCard").css("display", "none");
+        $("#cardContainer").append("<p id='selectCourseError' style='color: red;'>*Must select a Course before adding a player!</p>");
     } else {
-        $(".selectCourseError").remove();
+        $("#rightCard").css("display", "block");
+        $("#selectCourseError").remove();
         if (!init) {
 
             // Create column titles
@@ -120,22 +146,24 @@ function addPlayer(){
             if (playerNumber == 0) {
                 $("#leftCard").html("");
             }
-            $("#leftCard").append("<div class='player' id='playerLabel" + playerNumber + "'>Player " + (playerNumber + 1) + "<span class='glyphicon glyphicon-minus-sign' onclick='removePlayer(" + playerNumber + ")'></span></div>");
+            $("#leftCard").append("<div class='player' id='playerLabel" + playerNumber + "'><p data-editable class='name' id='name" + playerNumber + "' onclick='changeName(this)'>Player " + (playerNumber + 1) + "</p><span class='glyphicon glyphicon-minus-sign' onclick='removePlayer(" + playerNumber + ")'></span></div>");
 
             // Create the rows associated with those players
 
             $("#input").append("<tr id='row" + playerNumber + "'></tr>");
             if (numberOfHoles == 9) {
+                $("#leftCard").css("margin", "0 0 0 30px");
                 for (var i = 0; i <= numberOfHoles; i++) {
                     $("#row" + playerNumber).append("<td class='dataItem' id='dataItem" + itemNumber + "'>" +
-                        "<input class='input' id='input" + i + "'>" +
+                        "<input class='input' id='input" + itemNumber + "'>" +
                         "</td>");
                     itemNumber++;
                 }
             } else {
+                $("#leftCard").css("margin", "17px 0 0 30px");
                 for (var i = 0; i <= numberOfHoles + 2; i++) {
                     $("#row" + playerNumber).append("<td class='dataItem' id='dataItem" + itemNumber + "'>" +
-                        "<input class='input' id='input" + i + "'>" +
+                        "<input class='input' id='input" + itemNumber + "'>" +
                         "</td>");
                     itemNumber++;
                 }
@@ -150,20 +178,20 @@ function addPlayer(){
  *   Create a way to change player names
  -------------------------------------------*/
 
-$('.player').on('click', '[data-editable]', function(){
-    var $el = $(this);
+function changeName(theid) {
 
-    var $input = $('<input/>').val($el.text());
+    var $el = $(theid);
+
+    var $input = $("<input class='nameInput' type='text' maxlength='15' style='height: 24px; width: 100px;'/>").val( $el.text() );
     $el.replaceWith( $input );
 
     var save = function(){
-        var $p = $('<p data-editable />').text($input.val());
+        var $p = $("<p data-editable class='name' id='name" + playerNumber + "' onclick='changeName(this)'></p>").text( $input.val() );
         $input.replaceWith( $p );
     };
-    $input.one('blur', save).focus();
-});
 
-
+    $input.one('blur', save).focus()
+}
 
 /*-------------------------------------------
  *   Create a way to remove players
@@ -180,6 +208,7 @@ function removePlayer(theid) {
     playerAmount--;
     if($("#leftCard").html() == ""){
         $("#leftCard").html("Click \"Add a Player\" to add players.");
+        $("#rightCard").css("display", "none");
         itemNumber = 0;
         $(".tableHeader").remove();
         init = false;
@@ -191,6 +220,7 @@ function removePlayer(theid) {
  -------------------------------------------*/
 
 function resetCard() {
+    $("#rightCard").css("display", "none");
     $(".tableHeader").remove();
     $(".player").remove();
     $(".dataItem").remove();
@@ -198,7 +228,8 @@ function resetCard() {
     playerNumber = 0;
     itemNumber = 0;
     init = false;
-    $(".selectCourseError").remove();
+    errMaxPlayers = false;
+    $("#selectCourseError").remove();
     $("#errorMessage").remove();
     $("#leftCard").html("Click \"Add a Player\" to add players.");
 }

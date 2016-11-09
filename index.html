@@ -15,14 +15,17 @@
     <label id="courseSelectLabel">Golf Course:</label><select id="courseSelect" onchange="loadCourse(this.value)"><option>-</option></select>
     <label id="teeTypesLabel">Tee Type:</label><select id="teeTypes" onchange="loadTee()"><option>-</option></select>
     <label id="holeAmountLabel">Holes:</label><select id="holeAmount" onchange="loadHole()"><option>-</option></select>
-    <p id="chooseWarning"><em>* Must choose a course before selecting tee type or hole amount.</em></p>
+    <p id="chooseWarning"><em>* Must choose a course before selecting tee type or hole amount. If you don't select the amount of holes, it will default to the max amount of holes for the course.</em></p>
 </div>
 
 <!--<a href="javascript: addPlayer()">Add a Player<span class="glyphicon glyphicon-plus-sign"></span></a>-->
 <div id="cardContainer">
     <h2 id="scorecardTitle">Your Scorecard</h2>
-    <p id="changeNameMessage">Click on a player to change a name.</p>
-    <a href="javascript: addPlayer()">Add a Player<span class="glyphicon glyphicon-plus-sign"></span></a>
+    <p id="changeNameMessage">Click on a player to change a name. Click off of input to submit name (Input limit is 15 characters).</p>
+    <div id="buttons">
+        <a id="addPlayerButton" href="javascript: addPlayer()">Add a Player<span class="glyphicon glyphicon-plus-sign"></span></a>
+        <a id="resetButton" href="javascript: resetCard()">Reset</a>
+    </div>
     <!--<input id="playerCount" type="text" placeholder="Number of Players">-->
     <div id="card">
         <div id="leftCard">Click "Add a Player" to add players.</div>
@@ -30,8 +33,8 @@
             <table class="table table-bordered">
                 <thead>
                     <tr id="holes"></tr>
-                    <tr id="par"></tr>
                     <tr id="yardage"></tr>
+                    <tr id="par"></tr>
                     <tr id="handicap"></tr>
                 </thead>
                 <tbody id="input"></tbody>
