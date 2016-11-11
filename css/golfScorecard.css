@@ -218,6 +218,7 @@ table {
     padding: 10px !important;
     text-align: center;
     vertical-align: middle !important;
+    font-weight: bold;
 }
 
 .dataItem {
@@ -232,6 +233,7 @@ table {
     padding: 0 !important;
     text-align: center;
     height: 39px;
+    font-weight: bold;
 }
 
 .input {
@@ -280,7 +282,11 @@ table {
 }
 
 #inputValidationError {
+    margin-left: 41px;
+}
 
+#playerValidationError {
+    margin-left: 41px;
 }
 
 /*-------------------------------------------

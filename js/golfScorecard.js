@@ -328,19 +328,38 @@ function addPlayer(){
  *   Create a way to change player names
  -------------------------------------------*/
 
-function changeName(theid) {
+var playerId = 0;
 
-    var $el = $(theid);
+function changeName(theelement) {
+    var $el = $(theelement);
 
-    var $input = $("<input class='nameInput' type='text' maxlength='15' style='height: 24px; width: 100px;'/>").val( $el.text() );
+    var $input = $("<input onkeyup='validatePlayer(this.value, this)' class='nameInput' type='text' maxlength='15' style='height: 24px; width: 100px;'/>").val( $el.text() );
     $el.replaceWith( $input );
 
     var save = function(){
         var $p = $("<p data-editable class='name' id='name" + playerNumber + "' onclick='changeName(this)'></p>").text( $input.val() );
-        $input.replaceWith( $p );
+        if($input.val() !== ""){
+            $input.replaceWith( $p );
+        } else {
+            $("#playerValidationError").remove();
+            $input.replaceWith($el);
+        }
     };
     $input.one('blur', save).focus()
 }
+
+/*-------------------------------------------
+ *   Validate the names of the players
+ -------------------------------------------*/
+
+function validatePlayer(thevalue, theelement) {
+    $("#playerValidationError").remove();
+    if(!isNaN(parseInt(thevalue))){
+        $(theelement).val("");
+        $("#cardContainer").append("<p id='playerValidationError' style='color: red;'>* Cannot use numbers as names unless a word comes first (Ex: Larry3).</p>");
+    }
+}
+
 
 /*-------------------------------------------
  *   Create a way to remove players
@@ -599,10 +618,6 @@ function validateInput(thevalue, theid) {
         }
     }
 }
-
-/*-------------------------------------------
- *   Add up the sum for input's
- -------------------------------------------*/
 
 /*-------------------------------------------
  *   Reset Card function
