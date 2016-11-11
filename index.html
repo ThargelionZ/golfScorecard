@@ -21,14 +21,23 @@
 <!--<a href="javascript: addPlayer()">Add a Player<span class="glyphicon glyphicon-plus-sign"></span></a>-->
 <div id="cardContainer">
     <h2 id="scorecardTitle">Your Scorecard</h2>
-    <p id="changeNameMessage">Click on a player to change a name. Click off of input to submit name (Input limit is 15 characters).</p>
+    <p id="changeNameMessage">Click on a player to change a name. Click off of an input to submit a name (Input limit is 15 characters). You cannot add more than 6 players.</p>
     <div id="buttons">
-        <a id="addPlayerButton" href="javascript: addPlayer()">Add a Player<span class="glyphicon glyphicon-plus-sign"></span></a>
+        <a id="addPlayerButton" href="javascript: addPlayer()">Initialize Card</a>
+        <a id="clearCardButton" href="javascript: clearCard()">Clear Input Data</a>
         <a id="resetButton" href="javascript: resetCard()">Reset</a>
     </div>
     <!--<input id="playerCount" type="text" placeholder="Number of Players">-->
+    <div id="leftCardHeadings">
+        <h2 class="tableHeadings">Holes</h2>
+        <h2 class="tableHeadings">Yardage</h2>
+        <h2 class="tableHeadings">Par</h2>
+        <h2 class="tableHeadings">Handicap</h2>
+    </div>
     <div id="card">
-        <div id="leftCard">Click "Add a Player" to add players.</div>
+        <div id="leftCard">
+            <p id="initialMessage">Click "Add a Player" to add players.</p>
+        </div>
         <div id="rightCard">
             <table class="table table-bordered">
                 <thead>

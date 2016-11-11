@@ -22,7 +22,7 @@ h1 {
     background-color: black;
     color: white;
     font-family: Centaur, Arial, "Times New Roman";
-    padding: 20px 25px;
+    padding: 20px 41px;
 }
 
 #container {
@@ -38,11 +38,13 @@ h1 {
 }
 
 #courseTitle {
-    margin: 25px;
+    margin-left: 41px;
+    margin-top: 30px;
+    margin-bottom: 41px;
 }
 
 #courseSelectLabel {
-    margin-left: 25px;
+    margin-left: 41px;
 }
 
 #courseSelect {
@@ -66,12 +68,13 @@ h1 {
 }
 
 #chooseWarning {
-    margin: 25px;
+    margin-top: 40px;
+    margin-left: 41px;
 }
 
-/*-------------------------------------------
-*   Card Content
--------------------------------------------*/
+/*--------------------------------------------------------------------
+*   Card Content Div
+--------------------------------------------------------------------*/
 
 #scorecardTitle {
     padding: 25px 41px;
@@ -88,6 +91,9 @@ h1 {
     border-radius: 4px;
     background-color: rgba(255, 255, 255, 0.9);
 }
+/*-------------------------------------------
+*   Buttons
+-------------------------------------------*/
 
 #buttons {
     display: flex;
@@ -132,6 +138,51 @@ h1 {
     box-sizing: border-box;
 }
 
+#clearCardButton {
+    color: black;
+    display: block;
+    background-color: gold;
+    border-radius: 20px;
+    font-family: Centaur, Arial, "Times New Roman";
+    height: 50px;
+    margin: auto 0px auto 20px;
+    padding-top: 12px;
+    text-align: center;
+    text-decoration: none;
+    width: 200px;
+}
+
+#clearCardButton:hover {
+    border: 2px solid darkgoldenrod;
+    box-sizing: border-box;
+}
+
+/*-------------------------------------------
+*   Left Card Headings
+-------------------------------------------*/
+
+#leftCardHeadings {
+    margin-left: 44px;
+    margin-top: 80px;
+    margin-bottom: -220px;
+}
+
+.tableHeadings {
+    font-family: Centaur, Arial, "Times New Roman";
+    font-size: 14px;
+    margin-bottom: 24px;
+    font-weight: bold;
+    width: 100px;
+}
+
+.tableHeadings:first-child {
+    margin-bottom: 23px;
+}
+
+/*-------------------------------------------
+*   Card
+-------------------------------------------*/
+
 #card {
     display: flex;
     flex-direction: row;
@@ -140,10 +191,14 @@ h1 {
 
 #leftCard {
     font-family: Centaur, Arial, "Times New Roman";
-    margin: 17px 0 0 30px;
+    margin: 211px 0 0 30px;
     border-radius: 4px;
-    padding: 78px 15px 0 15px;
+    padding: 0px 15px 0 15px;
 }
+
+/*-------------------------------------------
+*   Right Card Data
+-------------------------------------------*/
 
 #rightCard {
     font-family: Centaur, Arial, "Times New Roman";
@@ -169,15 +224,28 @@ table {
     font-size: 12px;
     padding: 0 !important;
     text-align: center;
+    height: 39px;
+}
+
+.totals {
+    font-size: 12px;
+    padding: 0 !important;
+    text-align: center;
+    height: 39px;
 }
 
 .input {
     text-align: center;
     width: 100%;
+    height: 39px;
 }
 
+/*-------------------------------------------
+*   Left Card Data
+-------------------------------------------*/
+
 .player {
-    margin-bottom: 4px;
+    margin-bottom: 20px;
     width: 150px;
 }
 
@@ -198,11 +266,9 @@ table {
     float: right;
 }
 
-.glyphicon-plus-sign {
-    color: green;
-    padding-top: 2px;
-    padding-left: 10px;
-}
+/*-------------------------------------------
+*   Errors
+-------------------------------------------*/
 
 #errorMessage {
     padding: 0 0 0 42px;
@@ -213,27 +279,9 @@ table {
     margin-left: 45px;
 }
 
-/*.modalBackground {*/
-    /*display: none;*/
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*background-color: rgba(0, 0, 0, 0.4);*/
-    /*z-index: 1;*/
-/*}*/
+#inputValidationError {
 
-/*#modal {*/
-    /*display: none;*/
-    /*width: 300px;*/
-    /*height: 300px;*/
-    /*position: absolute;*/
-    /*margin: auto;*/
-    /*left: 0; right: 0; top: 0; bottom: 0;*/
-    /*border-radius: 4px;*/
-    /*background-color: #FFF;*/
-/*}*/
+}
 
 /*-------------------------------------------
 *   Anchor Tags
