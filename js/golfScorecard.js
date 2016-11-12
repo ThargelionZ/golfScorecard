@@ -262,7 +262,7 @@ function addPlayer(){
                 errMaxPlayers = true;
             }
         } else {
-
+            $("#messages").append("<div class='playerMessage' id='message" + (playerAmount + 1) + "'>This is where the score compared to par will appear.</div>");
             //Create the players themselves
 
             leftCard = $("#leftCard").html();
@@ -386,6 +386,7 @@ function removePlayer(theid) {
     }
     $("#playerLabel" + theid).remove();
     $("#row" + theid).remove();
+    $("#message" + (playerAmount)).remove();
     playerAmount--;
     if($("#leftCard").html() == ""){
         $("#leftCard").html("Click \"Add a Player\" to add players.");
@@ -395,6 +396,7 @@ function removePlayer(theid) {
         itemNumber = 0;
         $(".tableHeader").remove();
         init = false;
+        $(".playerMessage").remove();
     }
 }
 
@@ -973,6 +975,7 @@ function resetCard() {
     $("#errorMessage").remove();
     $("#leftCard").html("Click \"Add a Player\" to add players.");
     $("#addPlayerButton").text("Initialize Card");
+    $(".playerMessage").remove();
 }
 
 /*-------------------------------------------
@@ -982,6 +985,8 @@ function resetCard() {
 function clearCard() {
     $(".totals").text("0");
     $(".input").val("");
+    $(".playerMessage").text("This is where the score compared to par will appear.");
+    $(".playerMessage").css("color", "black");
 }
 
 
