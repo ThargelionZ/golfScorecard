@@ -31,7 +31,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
     };
 
     $(document).ready(function () {
-        $.post("http://golf-courses-api.herokuapp.com/courses/", userPosition, function(data, status){
+        $.post("https://golf-courses-api.herokuapp.com/courses/", userPosition, function(data, status){
             closeCourses = JSON.parse(data);
             for(i in closeCourses.courses){
                 $("#courseSelect").append("<option value='" + closeCourses.courses[i].id + "'>" + closeCourses.courses[i].name + "</option>");
@@ -49,7 +49,7 @@ function error() {
 var courseValue = $("#courseSelect").find(":selected").text();
 
 function loadCourse(theid) {
-    $.get("http://golf-courses-api.herokuapp.com/courses/" + theid, function(data, status){
+    $.get("https://golf-courses-api.herokuapp.com/courses/" + theid, function(data, status){
         resetCard();
         teeValue = "-";
         courseValue = $("#courseSelect").find(":selected").text();
@@ -106,6 +106,7 @@ var itemNumber = 0;
 var leftCard;
 var errMaxPlayers = false;
 var init = false;
+
 $("#rightCard").css("display", "none");
 $("#leftCardHeadings").css("display", "none");
 
@@ -271,7 +272,7 @@ function addPlayer(){
             if (playerNumber == 0) {
                 $("#leftCard").html("");
             }
-            $("#leftCard").append("<div class='player' id='playerLabel" + playerNumber + "'><p data-editable class='name' id='name" + playerNumber + "' onclick='changeName(this)'>Player " + (playerNumber + 1) + "</p><span class='glyphicon glyphicon-minus-sign' onclick='removePlayer(" + playerNumber + ")'></span></div>");
+            $("#leftCard").append("<div class='player' id='playerLabel" + playerNumber + "'><p data-editable class='name' id='name" + playerNumber + "' onclick='changeName(this, this.id)'>Player " + (playerNumber + 1) + "</p><span class='glyphicon glyphicon-minus-sign' onclick='removePlayer(" + playerNumber + ")'></span></div>");
 
             // Create the rows associated with those players
 
@@ -328,16 +329,15 @@ function addPlayer(){
  *   Create a way to change player names
  -------------------------------------------*/
 
-var playerId = 0;
 
-function changeName(theelement) {
+
+function changeName(theelement, theid) {
     var $el = $(theelement);
-
-    var $input = $("<input onkeyup='validatePlayer(this.value, this)' class='nameInput' type='text' maxlength='15' style='height: 24px; width: 100px;'/>").val( $el.text() );
+    var $input = $("<input onkeyup='validatePlayer(this.value, this)' class='" + theid + "Input' type='text' maxlength='15' style='height: 24px; width: 100px;'/>").val( $el.text() );
     $el.replaceWith( $input );
 
     var save = function(){
-        var $p = $("<p data-editable class='name' id='name" + playerNumber + "' onclick='changeName(this)'></p>").text( $input.val() );
+        var $p = $("<p data-editable class='name' id='" + theid + "' onclick='changeName(this, this.id)'></p>").text( $input.val() );
         if($input.val() !== ""){
             $input.replaceWith( $p );
         } else {
@@ -354,9 +354,22 @@ function changeName(theelement) {
 
 function validatePlayer(thevalue, theelement) {
     $("#playerValidationError").remove();
+    $("#playerRepeatError").remove();
     if(!isNaN(parseInt(thevalue))){
         $(theelement).val("");
         $("#cardContainer").append("<p id='playerValidationError' style='color: red;'>* Cannot use numbers as names unless a word comes first (Ex: Larry3).</p>");
+    } else {
+        for(var i = 0; i < 6; i++){
+            var value = $("#name" + i).text();
+            if(value !== "" && value !== undefined){
+                if(value == thevalue){
+                    i = 6;
+                    $("#cardContainer").append("<p id='playerRepeatError' style='color: red;'>* No two names can be the same.</p>");
+                    $(theelement).val("");
+                }
+            }
+
+        }
     }
 }
 
@@ -411,6 +424,21 @@ var totalGrand0 = 0,
     totalGrand5 = 0;
 
 var parseVal;
+var regVal;
+
+var incomplete0 = true,
+    incomplete1 = true,
+    incomplete2 = true,
+    incomplete3 = true,
+    incomplete4 = true,
+    incomplete5 = true;
+
+var compareToPar0,
+    compareToPar1,
+    compareToPar2,
+    compareToPar3,
+    compareToPar4,
+    compareToPar5;
 
 function validateInput(thevalue, theid) {
     $("#inputValidationError").remove();
@@ -419,14 +447,23 @@ function validateInput(thevalue, theid) {
         $("#cardContainer").append("<p id='inputValidationError' style='color: red;'>* Must only input numbers (0 - 99)</p>");
     } else {
         if(numberOfHoles == 9){
+            /*-------------------------------------------
+             *   Validate Input for 9 Holes
+             -------------------------------------------*/
             totalOut0 = 0;
             totalOut1 = 0;
             totalOut2 = 0;
             totalOut3 = 0;
             totalOut4 = 0;
             totalOut5 = 0;
-
+            incomplete0 = false;
+            incomplete1 = false;
+            incomplete2 = false;
+            incomplete3 = false;
+            incomplete4 = false;
+            incomplete5 = false;
             for(var i = 0; i < 60; i++){
+                regVal = $("#input" + i).val();
                 parseVal = parseInt($("#input" + i).val());
                 if (!isNaN(parseVal)) {
                     // R0W 0
@@ -452,6 +489,43 @@ function validateInput(thevalue, theid) {
                     // ROW 5
                     else if (i > 49 && i < 59) {
                         totalOut5 += parseVal;
+                    }
+                } else {
+                    // R0W 0
+                    if (i < 9) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete0 = true;
+                        }
+                    }
+                    // ROW 1
+                    else if (i > 9 && i < 19) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete1 = true;
+                        }
+                    }
+                    // ROW 2
+                    else if (i > 19 && i < 29) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete2 = true;
+                        }
+                    }
+                    // ROW 3
+                    else if (i > 29 && i < 39) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete3 = true;
+                        }
+                    }
+                    // ROW 4
+                    else if (i > 39 && i < 49) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete4 = true;
+                        }
+                    }
+                    // ROW 5
+                    else if (i > 49 && i < 59) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete5 = true;
+                        }
                     }
                 }
                 // ROW 0
@@ -480,7 +554,102 @@ function validateInput(thevalue, theid) {
                 }
 
             }
+            if(!incomplete0){
+                compareToPar0 = totalOut0 - 36;
+                if(compareToPar0 < 0){
+                    $("#message1").text($("#name0").text() + ": Your score compared to par is " + compareToPar0 + ". Well done! You are fit for the PGA!");
+                    $("#message1").css("color", "green");
+                }
+                else if(compareToPar0 == 0){
+                    $("#message1").text($("#name0").text() + ": Your score compared to par is " + compareToPar0 + ". Congratulations! You got exactly par!");
+                    $("#message1").css("color", "blue");
+                }
+                else if(compareToPar0 > 0){
+                    $("#message1").text($("#name0").text() + ": Your score compared to par is " + compareToPar0 + ". You need serious practice. After that come back and try again.");
+                    $("#message1").css("color", "red");
+                }
+            }
+            if(!incomplete1){
+                compareToPar1 = totalOut1 - 36;
+                if(compareToPar1 < 0){
+                    $("#message2").text($("#name1").text() + ": Your score compared to par is " + compareToPar1 + ". Well done! You are fit for the PGA!");
+                    $("#message2").css("color", "green");
+                }
+                else if(compareToPar1 == 0){
+                    $("#message2").text($("#name1").text() + ": Your score compared to par is " + compareToPar1 + ". Congratulations! You got exactly par!");
+                    $("#message2").css("color", "blue");
+                }
+                else if(compareToPar1 > 0){
+                    $("#message2").text($("#name1").text() + ": Your score compared to par is " + compareToPar1 + ". You need serious practice. After that come back and try again.");
+                    $("#message2").css("color", "red");
+                }
+            }
+            if(!incomplete2){
+                compareToPar2 = totalOut2 - 36;
+                if(compareToPar2 < 0){
+                    $("#message3").text($("#name2").text() + ": Your score compared to par is " + compareToPar2 + ". Well done! You are fit for the PGA!");
+                    $("#message3").css("color", "green");
+                }
+                else if(compareToPar2 == 0){
+                    $("#message3").text($("#name2").text() + ": Your score compared to par is " + compareToPar2 + ". Congratulations! You got exactly par!");
+                    $("#message3").css("color", "blue");
+                }
+                else if(compareToPar2 > 0){
+                    $("#message3").text($("#name2").text() + ": Your score compared to par is " + compareToPar2 + ". You need serious practice. After that come back and try again.");
+                    $("#message3").css("color", "red");
+                }
+            }
+            if(!incomplete3){
+                compareToPar3 = totalOut3 - 36;
+                if(compareToPar3 < 0){
+                    $("#message4").text($("#name3").text() + ": Your score compared to par is " + compareToPar3 + ". Well done! You are fit for the PGA!");
+                    $("#message4").css("color", "green");
+                }
+                else if(compareToPar3 == 0){
+                    $("#message4").text($("#name3").text() + ": Your score compared to par is " + compareToPar3 + ". Congratulations! You got exactly par!");
+                    $("#message4").css("color", "blue");
+                }
+                else if(compareToPar3 > 0){
+                    $("#message4").text($("#name3").text() + ": Your score compared to par is " + compareToPar3 + ". You need serious practice. After that come back and try again.");
+                    $("#message4").css("color", "red");
+                }
+            }
+            if(!incomplete4){
+                compareToPar4 = totalOut4 - 36;
+                if(compareToPar4 < 0){
+                    $("#message5").text($("#name4").text() + ": Your score compared to par is " + compareToPar4 + ". Well done! You are fit for the PGA!");
+                    $("#message5").css("color", "green");
+                }
+                else if(compareToPar4 == 0){
+                    $("#message5").text($("#name4").text() + ": Your score compared to par is " + compareToPar4 + ". Congratulations! You got exactly par!");
+                    $("#message5").css("color", "blue");
+                }
+                else if(compareToPar4 > 0){
+                    $("#message5").text($("#name4").text() + ": Your score compared to par is " + compareToPar4 + ". You need serious practice. After that come back and try again.");
+                    $("#message5").css("color", "red");
+                }
+            }
+            if(!incomplete5){
+                compareToPar5 = totalOut5 - 36;
+                if(compareToPar5 < 0){
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". Well done! You are fit for the PGA!");
+                    $("#message6").css("color", "green");
+                }
+                else if(compareToPar5 == 0){
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". Congratulations! You got exactly par!");
+                    $("#message6").css("color", "blue");
+                }
+                else if(compareToPar5 > 0){
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". You need serious practice. After that come back and try again.");
+                    $("#message6").css("color", "red");
+                }
+            }
         } else {
+
+            /*-------------------------------------------
+             *   Validate the input for 18 holes
+             -------------------------------------------*/
+
             totalOut0 = 0;
             totalOut1 = 0;
             totalOut2 = 0;
@@ -502,7 +671,15 @@ function validateInput(thevalue, theid) {
             totalGrand4 = 0;
             totalGrand5 = 0;
 
+            incomplete0 = false;
+            incomplete1 = false;
+            incomplete2 = false;
+            incomplete3 = false;
+            incomplete4 = false;
+            incomplete5 = false;
+
             for(var i = 0; i < 126; i++) {
+                regVal = $("#input" + i).val();
                 parseVal = parseInt($("#input" + i).val());
                 if (!isNaN(parseVal)) {
                     // ROW O
@@ -513,39 +690,106 @@ function validateInput(thevalue, theid) {
                         totalIn0 += parseVal;
                     }
                     // ROW 1
-                    else if (i < 30) {
+                    else if (i > 20 && i < 30) {
                         totalOut1 += parseVal;
                     }
                     else if (i > 30 && i < 40) {
                         totalIn1 += parseVal;
                     }
                     // ROW 2
-                    else if (i < 51) {
+                    else if (i > 41 && i < 51) {
                         totalOut2 += parseVal;
                     }
                     else if (i > 51 && i < 61) {
                         totalIn2 += parseVal;
                     }
                     // ROW 3
-                    else if (i < 72) {
+                    else if (i > 62 && i < 72) {
                         totalOut3 += parseVal;
                     }
                     else if (i > 72 && i < 82) {
                         totalIn3 += parseVal;
                     }
                     // ROW 4
-                    else if (i < 93) {
+                    else if (i > 83 && i < 93) {
                         totalOut4 += parseVal;
                     }
                     else if (i > 93 && i < 103) {
                         totalIn4 += parseVal;
                     }
                     // ROW 5
-                    else if (i < 114) {
+                    else if (1 > 104 && i < 114) {
                         totalOut5 += parseVal;
                     }
                     else if (i > 114 && i < 124) {
                         totalIn5 += parseVal;
+                    }
+                } else {
+                    // ROW O
+                    if (i < 9) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete0 = true;
+                        }
+                    }
+                    else if (i > 9 && i < 19) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete0 = true;
+                        }
+                    }
+                    // ROW 1
+                    else if (i > 20 && i < 30) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete1 = true;
+                        }
+                    }
+                    else if (i > 30 && i < 40) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete1 = true;
+                        }
+                    }
+                    // ROW 2
+                    else if (i > 41 && i < 51) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete2 = true;
+                        }
+                    }
+                    else if (i > 51 && i < 61) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete2 = true;
+                        }
+                    }
+                    // ROW 3
+                    else if (i > 62 && i < 72) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete3 = true;
+                        }
+                    }
+                    else if (i > 72 && i < 82) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete3 = true;
+                        }
+                    }
+                    // ROW 4
+                    else if (i > 83 && i < 93) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete4 = true;
+                        }
+                    }
+                    else if (i > 93 && i < 103) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete4 = true;
+                        }
+                    }
+                    // ROW 5
+                    else if (i > 104 && i < 114) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete5 = true;
+                        }
+                    }
+                    else if (i > 114 && i < 124) {
+                        if(regVal == "" || regVal == undefined){
+                            incomplete5 = true;
+                        }
                     }
                 }
                 // ROW 0
@@ -613,6 +857,96 @@ function validateInput(thevalue, theid) {
                 else if (i == 125) {
                     totalGrand5 = totalOut5 + totalIn5;
                     $("#totalGrand5").text(totalGrand5);
+                }
+            }
+            if(!incomplete0){
+                compareToPar0 = totalGrand0 - 72;
+                if(compareToPar0 < 0){
+                    $("#message1").text($("#name0").text() + ": Your score compared to par is " + compareToPar0 + ". Well done! You are fit for the PGA!");
+                    $("#message1").css("color", "green");
+                }
+                else if(compareToPar0 == 0){
+                    $("#message1").text($("#name0").text() + ": Your score compared to par is " + compareToPar0 + ". Congratulations! You got exactly par!");
+                    $("#message1").css("color", "blue");
+                }
+                else if(compareToPar0 > 0){
+                    $("#message1").text($("#name0").text() + ": Your score compared to par is " + compareToPar0 + ". You need serious practice. After that come back and try again.");
+                    $("#message1").css("color", "red");
+                }
+            }
+            if(!incomplete1){
+                compareToPar1 = totalGrand1 - 72;
+                if(compareToPar1 < 0){
+                    $("#message2").text($("#name1").text() + ": Your score compared to par is " + compareToPar1 + ". Well done! You are fit for the PGA!");
+                    $("#message2").css("color", "green");
+                }
+                else if(compareToPar1 == 0){
+                    $("#message2").text($("#name1").text() + ": Your score compared to par is " + compareToPar1 + ". Congratulations! You got exactly par!");
+                    $("#message2").css("color", "blue");
+                }
+                else if(compareToPar1 > 0){
+                    $("#message2").text($("#name1").text() + ": Your score compared to par is " + compareToPar1 + ". You need serious practice. After that come back and try again.");
+                    $("#message2").css("color", "red");
+                }
+            }
+            if(!incomplete2){
+                compareToPar2 = totalGrand2 - 72;
+                if(compareToPar2 < 0){
+                    $("#message3").text($("#name2").text() + ": Your score compared to par is " + compareToPar2 + ". Well done! You are fit for the PGA!");
+                    $("#message3").css("color", "green");
+                }
+                else if(compareToPar2 == 0){
+                    $("#message3").text($("#name2").text() + ": Your score compared to par is " + compareToPar2 + ". Congratulations! You got exactly par!");
+                    $("#message3").css("color", "blue");
+                }
+                else if(compareToPar2 > 0){
+                    $("#message3").text($("#name2").text() + ": Your score compared to par is " + compareToPar2 + ". You need serious practice. After that come back and try again.");
+                    $("#message3").css("color", "red");
+                }
+            }
+            if(!incomplete3){
+                compareToPar3 = totalGrand3 - 72;
+                if(compareToPar3 < 0){
+                    $("#message4").text($("#name3").text() + ": Your score compared to par is " + compareToPar3 + ". Well done! You are fit for the PGA!");
+                    $("#message4").css("color", "green");
+                }
+                else if(compareToPar3 == 0){
+                    $("#message4").text($("#name3").text() + ": Your score compared to par is " + compareToPar3 + ". Congratulations! You got exactly par!");
+                    $("#message4").css("color", "blue");
+                }
+                else if(compareToPar3 > 0){
+                    $("#message4").text($("#name3").text() + ": Your score compared to par is " + compareToPar3 + ". You need serious practice. After that come back and try again.");
+                    $("#message4").css("color", "red");
+                }
+            }
+            if(!incomplete4){
+                compareToPar4 = totalGrand4 - 72;
+                if(compareToPar4 < 0){
+                    $("#message5").text($("#name4").text() + ": Your score compared to par is " + compareToPar4 + ". Well done! You are fit for the PGA!");
+                    $("#message5").css("color", "green");
+                }
+                else if(compareToPar4 == 0){
+                    $("#message5").text($("#name4").text() + ": Your score compared to par is " + compareToPar4 + ". Congratulations! You got exactly par!");
+                    $("#message5").css("color", "blue");
+                }
+                else if(compareToPar4 > 0){
+                    $("#message5").text($("#name4").text() + ": Your score compared to par is " + compareToPar4 + ". You need serious practice. After that come back and try again.");
+                    $("#message5").css("color", "red");
+                }
+            }
+            if(!incomplete5){
+                compareToPar5 = totalGrand5 - 72;
+                if(compareToPar5 < 0){
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". Well done! You are fit for the PGA!");
+                    $("#message6").css("color", "green");
+                }
+                else if(compareToPar5 == 0){
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". Congratulations! You got exactly par!");
+                    $("#message6").css("color", "blue");
+                }
+                else if(compareToPar5 > 0){
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". You need serious practice. After that come back and try again.");
+                    $("#message6").css("color", "red");
                 }
             }
         }

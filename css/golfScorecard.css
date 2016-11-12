@@ -290,6 +290,26 @@ table {
 }
 
 /*-------------------------------------------
+*   Messages Div
+-------------------------------------------*/
+
+#messages {
+    width: 90%;
+    margin: 20px auto;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding-bottom: 30px;
+}
+
+#compareToParHeading {
+    padding: 25px 41px;
+}
+
+.playerMessage {
+    margin-left: 41px;
+}
+
+/*-------------------------------------------
 *   Anchor Tags
 -------------------------------------------*/
 
