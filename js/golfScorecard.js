@@ -262,7 +262,7 @@ function addPlayer(){
                 errMaxPlayers = true;
             }
         } else {
-            $("#messages").append("<div class='playerMessage' id='message" + (playerAmount + 1) + "'>This is where the score compared to par will appear.</div>");
+            $("#messages").append("<div class='playerMessage' id='message" + (playerAmount + 1) + "'>This is where the score compared to par will appear for Player " + (playerAmount + 1) + ".</div>");
             //Create the players themselves
 
             leftCard = $("#leftCard").html();
@@ -567,7 +567,7 @@ function validateInput(thevalue, theid) {
                     $("#message1").css("color", "blue");
                 }
                 else if(compareToPar0 > 0){
-                    $("#message1").text($("#name0").text() + ": Your score compared to par is " + compareToPar0 + ". You need serious practice. After that come back and try again.");
+                    $("#message1").text($("#name0").text() + ": Your score compared to par is \+" + compareToPar0 + ". You need serious practice. After that come back and try again.");
                     $("#message1").css("color", "red");
                 }
             }
@@ -582,7 +582,7 @@ function validateInput(thevalue, theid) {
                     $("#message2").css("color", "blue");
                 }
                 else if(compareToPar1 > 0){
-                    $("#message2").text($("#name1").text() + ": Your score compared to par is " + compareToPar1 + ". You need serious practice. After that come back and try again.");
+                    $("#message2").text($("#name1").text() + ": Your score compared to par is \+" + compareToPar1 + ". You need serious practice. After that come back and try again.");
                     $("#message2").css("color", "red");
                 }
             }
@@ -597,7 +597,7 @@ function validateInput(thevalue, theid) {
                     $("#message3").css("color", "blue");
                 }
                 else if(compareToPar2 > 0){
-                    $("#message3").text($("#name2").text() + ": Your score compared to par is " + compareToPar2 + ". You need serious practice. After that come back and try again.");
+                    $("#message3").text($("#name2").text() + ": Your score compared to par is \+" + compareToPar2 + ". You need serious practice. After that come back and try again.");
                     $("#message3").css("color", "red");
                 }
             }
@@ -612,7 +612,7 @@ function validateInput(thevalue, theid) {
                     $("#message4").css("color", "blue");
                 }
                 else if(compareToPar3 > 0){
-                    $("#message4").text($("#name3").text() + ": Your score compared to par is " + compareToPar3 + ". You need serious practice. After that come back and try again.");
+                    $("#message4").text($("#name3").text() + ": Your score compared to par is \+" + compareToPar3 + ". You need serious practice. After that come back and try again.");
                     $("#message4").css("color", "red");
                 }
             }
@@ -627,14 +627,14 @@ function validateInput(thevalue, theid) {
                     $("#message5").css("color", "blue");
                 }
                 else if(compareToPar4 > 0){
-                    $("#message5").text($("#name4").text() + ": Your score compared to par is " + compareToPar4 + ". You need serious practice. After that come back and try again.");
+                    $("#message5").text($("#name4").text() + ": Your score compared to par is \+" + compareToPar4 + ". You need serious practice. After that come back and try again.");
                     $("#message5").css("color", "red");
                 }
             }
             if(!incomplete5){
                 compareToPar5 = totalOut5 - 36;
                 if(compareToPar5 < 0){
-                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". Well done! You are fit for the PGA!");
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is +" + compareToPar5 + ". Well done! You are fit for the PGA!");
                     $("#message6").css("color", "green");
                 }
                 else if(compareToPar5 == 0){
@@ -642,7 +642,7 @@ function validateInput(thevalue, theid) {
                     $("#message6").css("color", "blue");
                 }
                 else if(compareToPar5 > 0){
-                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". You need serious practice. After that come back and try again.");
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is \+" + compareToPar5 + ". You need serious practice. After that come back and try again.");
                     $("#message6").css("color", "red");
                 }
             }
@@ -720,7 +720,7 @@ function validateInput(thevalue, theid) {
                         totalIn4 += parseVal;
                     }
                     // ROW 5
-                    else if (1 > 104 && i < 114) {
+                    else if (i > 104 && i < 114) {
                         totalOut5 += parseVal;
                     }
                     else if (i > 114 && i < 124) {
@@ -872,7 +872,7 @@ function validateInput(thevalue, theid) {
                     $("#message1").css("color", "blue");
                 }
                 else if(compareToPar0 > 0){
-                    $("#message1").text($("#name0").text() + ": Your score compared to par is " + compareToPar0 + ". You need serious practice. After that come back and try again.");
+                    $("#message1").text($("#name0").text() + ": Your score compared to par is \+" + compareToPar0 + ". You need serious practice. After that come back and try again.");
                     $("#message1").css("color", "red");
                 }
             }
@@ -887,7 +887,7 @@ function validateInput(thevalue, theid) {
                     $("#message2").css("color", "blue");
                 }
                 else if(compareToPar1 > 0){
-                    $("#message2").text($("#name1").text() + ": Your score compared to par is " + compareToPar1 + ". You need serious practice. After that come back and try again.");
+                    $("#message2").text($("#name1").text() + ": Your score compared to par is \+" + compareToPar1 + ". You need serious practice. After that come back and try again.");
                     $("#message2").css("color", "red");
                 }
             }
@@ -902,7 +902,7 @@ function validateInput(thevalue, theid) {
                     $("#message3").css("color", "blue");
                 }
                 else if(compareToPar2 > 0){
-                    $("#message3").text($("#name2").text() + ": Your score compared to par is " + compareToPar2 + ". You need serious practice. After that come back and try again.");
+                    $("#message3").text($("#name2").text() + ": Your score compared to par is \+" + compareToPar2 + ". You need serious practice. After that come back and try again.");
                     $("#message3").css("color", "red");
                 }
             }
@@ -917,7 +917,7 @@ function validateInput(thevalue, theid) {
                     $("#message4").css("color", "blue");
                 }
                 else if(compareToPar3 > 0){
-                    $("#message4").text($("#name3").text() + ": Your score compared to par is " + compareToPar3 + ". You need serious practice. After that come back and try again.");
+                    $("#message4").text($("#name3").text() + ": Your score compared to par is \+" + compareToPar3 + ". You need serious practice. After that come back and try again.");
                     $("#message4").css("color", "red");
                 }
             }
@@ -932,7 +932,7 @@ function validateInput(thevalue, theid) {
                     $("#message5").css("color", "blue");
                 }
                 else if(compareToPar4 > 0){
-                    $("#message5").text($("#name4").text() + ": Your score compared to par is " + compareToPar4 + ". You need serious practice. After that come back and try again.");
+                    $("#message5").text($("#name4").text() + ": Your score compared to par is \+" + compareToPar4 + ". You need serious practice. After that come back and try again.");
                     $("#message5").css("color", "red");
                 }
             }
@@ -947,7 +947,7 @@ function validateInput(thevalue, theid) {
                     $("#message6").css("color", "blue");
                 }
                 else if(compareToPar5 > 0){
-                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". You need serious practice. After that come back and try again.");
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is \+" + compareToPar5 + ". You need serious practice. After that come back and try again.");
                     $("#message6").css("color", "red");
                 }
             }
