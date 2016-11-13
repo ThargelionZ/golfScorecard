@@ -305,6 +305,10 @@ table {
     padding: 25px 41px;
 }
 
+#messagesInfo {
+    margin-left: 41px;
+}
+
 .playerMessage {
     margin-left: 41px;
 }
