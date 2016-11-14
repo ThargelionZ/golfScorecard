@@ -65,9 +65,9 @@ function loadCourse(theid) {
             $("#teeTypes").append("<option class='teeOptions' value='"+ i + "'>" + selectedCourse.course.holes[0].tee_boxes[i].tee_type +"</option>");
         }
         if(numberOfHoles == 18){
-            $("#holeAmount").append("<option class='holeOptions'>9 Holes</option>" + "<option class='holeOptions'>18 Holes</option>");
+            $("#holeAmount").append("<option class='holeOptions'>Front 9 Holes</option>" + "<option class='holeOptions'>Back 9 Holes</option>" + "<option class='holeOptions'>All 18 Holes</option>");
         } else {
-            $("#holeAmount").append("<option>9 Holes</option>");
+            $("#holeAmount").append("<option class='holeOptions'>Front 9 Holes</option>" + "<option class='holeOptions'>Back 9 Holes</option>");
         }
     });
 }
@@ -79,10 +79,10 @@ var holeValue;
 function loadHole() {
     resetCard();
     holeValue = $("#holeAmount").find(":selected").val();
-    if(holeValue == "9 Holes"){
+    if(holeValue == "Front 9 Holes" || holeValue== "Back 9 Holes"){
         numberOfHoles = 9;
     }
-    else if(holeValue == "18 Holes") {
+    else if(holeValue == "All 18 Holes") {
         numberOfHoles = 18;
     }
 }
@@ -123,15 +123,37 @@ function addPlayer(){
         $("#selectCourseError").remove();
         if (!init) {
             // Create hole titles
-
-            for (var i = 0; i < numberOfHoles; i++) {
-                $("#holes").append("<td class='tableHeader'><strong>Hole " + (i + 1) + "</strong></td>");
-                if (i == 8) {
-                    $("#holes").append("<td class='tableHeader'><strong>Total (Out)</strong></td>");
+            if(holeValue == "Front 9 Holes"){
+                for (var i = 0; i < numberOfHoles; i++) {
+                    $("#holes").append("<td class='tableHeader'><strong>Hole " + (i + 1) + "</strong></td>");
+                    if (i == 8) {
+                        $("#holes").append("<td class='tableHeader'><strong>Total (Out)</strong></td>");
+                    }
+                    else if (i == 17) {
+                        $("#holes").append("<td class='tableHeader'><strong>Total (In)</strong></td>");
+                    }
                 }
-                else if (i == 17) {
-                    $("#holes").append("<td class='tableHeader'><strong>Total (In)</strong></td>");
-                    $("#holes").append("<td class='tableHeader'><strong>Grand Total</strong></td>");
+            }
+
+            else if(holeValue == "Back 9 Holes"){
+                for (var i = 9; i < numberOfHoles + 9; i++) {
+                    $("#holes").append("<td class='tableHeader'><strong>Hole " + (i + 1) + "</strong></td>");
+                    if (i == 17) {
+                        $("#holes").append("<td class='tableHeader'><strong>Total (In)</strong></td>");
+                    }
+                }
+            }
+
+            else if(holeValue == "All 18 Holes"){
+                for (var i = 0; i < numberOfHoles; i++) {
+                    $("#holes").append("<td class='tableHeader'><strong>Hole " + (i + 1) + "</strong></td>");
+                    if (i == 8) {
+                        $("#holes").append("<td class='tableHeader'><strong>Total (Out)</strong></td>");
+                    }
+                    else if (i == 17) {
+                        $("#holes").append("<td class='tableHeader'><strong>Total (In)</strong></td>");
+                        $("#holes").append("<td class='tableHeader'><strong>Grand Total</strong></td>");
+                    }
                 }
             }
 
@@ -149,35 +171,70 @@ function addPlayer(){
                 yardageOut = 0,
                 yardageGrand = 0;
 
-            for (var i = 0; i < columns; i++) {
-                if(i < 9) {
-                    yardage = selectedCourse.course.holes[i].tee_boxes[$("#teeTypes").val()].yards;
-                }
-                else if(i > 9 && i < 19) {
-                    yardage = selectedCourse.course.holes[i - 1].tee_boxes[0].yards;
-                }
+            if(holeValue == "Front 9 Holes"){
+                for (var i = 0; i < columns; i++) {
+                    if(i < 9) {
+                        yardage = selectedCourse.course.holes[i].tee_boxes[$("#teeTypes").val()].yards;
+                        yardageOut += yardage;
+                    }
 
-                if(i < 9){
-                    yardageOut += yardage;
-                }
-                else if (i > 9 && i < 19) {
-                    yardageIn += yardage;
-                }
-
-                if(i == 9) {
-                    $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardageOut + "</td>");
-                }
-                else if(i == 19) {
-                    $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardageIn + "</td>");
-                }
-                else if(i == 20) {
-                    yardageGrand = yardageIn + yardageOut;
-                    $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardageGrand + "</td>");
-                }
-                else {
-                    $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardage + "</td>");
+                    if(i == 9) {
+                        $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardageOut + "</td>");
+                    } else {
+                        $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardage + "</td>");
+                    }
                 }
             }
+
+            else if(holeValue == "Back 9 Holes"){
+                for (var i = 10; i < columns + 10; i++) {
+                    if(i > 9 && i < 19) {
+                        yardage = selectedCourse.course.holes[i - 1].tee_boxes[$("#teeTypes").val()].yards;
+                        yardageIn += yardage;
+                    }
+
+                    if(i == 19) {
+                        $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardageIn + "</td>");
+                    }
+                    else {
+                        $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardage + "</td>");
+                    }
+                }
+            }
+
+            else if(holeValue == "All 18 Holes"){
+                for (var i = 0; i < columns; i++) {
+                    if(i < 9) {
+                        yardage = selectedCourse.course.holes[i].tee_boxes[$("#teeTypes").val()].yards;
+                    }
+                    else if(i > 9 && i < 19) {
+                        yardage = selectedCourse.course.holes[i - 1].tee_boxes[$("#teeTypes").val()].yards;
+                    }
+
+                    if(i < 9){
+                        yardageOut += yardage;
+                    }
+                    else if (i > 9 && i < 19) {
+                        yardageIn += yardage;
+                    }
+
+                    if(i == 9) {
+                        $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardageOut + "</td>");
+                    }
+                    else if(i == 19) {
+                        $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardageIn + "</td>");
+                    }
+                    else if(i == 20) {
+                        yardageGrand = yardageIn + yardageOut;
+                        $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardageGrand + "</td>");
+                    }
+                    else {
+                        $("#yardage").append("<td id='yardageId" + i + "' class='tableHeader'>" + yardage + "</td>");
+                    }
+                }
+            }
+
+
 
             // Create par values
 
@@ -186,35 +243,69 @@ function addPlayer(){
                 parOut = 0,
                 parGrand = 0;
 
-            for (var i = 0; i < columns; i++) {
-                if(i < 9) {
-                    par = selectedCourse.course.holes[i].tee_boxes[0].par;
-                }
-                else if(i > 9 && i < 19) {
-                    par = selectedCourse.course.holes[i - 1].tee_boxes[0].par;
-                }
+            if(holeValue == "Front 9 Holes"){
+                for (var i = 0; i < columns; i++) {
+                    if(i < 9) {
+                        par = selectedCourse.course.holes[i].tee_boxes[0].par;
+                        parOut += par;
+                    }
 
-                if(i < 9){
-                    parOut += par;
-                }
-                else if (i > 9 && i < 19) {
-                    parIn += par;
-                }
-
-                if(i == 9) {
-                    $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + parOut + "</td>");
-                }
-                else if(i == 19) {
-                    $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + parIn + "</td>");
-                }
-                else if(i == 20) {
-                    parGrand = parIn + parOut;
-                    $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + parGrand + "</td>");
-                }
-                else {
-                    $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + par + "</td>");
+                    if(i == 9) {
+                        $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + parOut + "</td>");
+                    } else {
+                        $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + par + "</td>");
+                    }
                 }
             }
+
+            else if(holeValue == "Back 9 Holes"){
+                for (var i = 10; i < columns + 10; i++) {
+                    if(i > 9 && i < 19) {
+                        par = selectedCourse.course.holes[i - 1].tee_boxes[0].par;
+                        parIn += par;
+                    }
+
+                    if(i == 19) {
+                        $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + parIn + "</td>");
+                    } else {
+                        $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + par + "</td>");
+                    }
+                }
+            }
+
+            else if(holeValue == "All 18 Holes"){
+                for (var i = 0; i < columns; i++) {
+                    if(i < 9) {
+                        par = selectedCourse.course.holes[i].tee_boxes[0].par;
+                    }
+                    else if(i > 9 && i < 19) {
+                        par = selectedCourse.course.holes[i - 1].tee_boxes[0].par;
+                    }
+
+                    if(i < 9){
+                        parOut += par;
+                    }
+                    else if (i > 9 && i < 19) {
+                        parIn += par;
+                    }
+
+                    if(i == 9) {
+                        $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + parOut + "</td>");
+                    }
+                    else if(i == 19) {
+                        $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + parIn + "</td>");
+                    }
+                    else if(i == 20) {
+                        parGrand = parIn + parOut;
+                        $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + parGrand + "</td>");
+                    }
+                    else {
+                        $("#par").append("<td id='parId" + i + "' class='tableHeader'>" + par + "</td>");
+                    }
+                }
+            }
+
+
 
             // Create handicap values
 
@@ -223,36 +314,67 @@ function addPlayer(){
                 handicapOut = 0,
                 handicapGrand = 0;
 
-            for (var i = 0; i < columns; i++) {
-                if(i < 9) {
-                    handicap = selectedCourse.course.holes[i].tee_boxes[0].hcp;
-                }
-                else if(i > 9 && i < 19) {
-                    handicap = selectedCourse.course.holes[i - 1].tee_boxes[0].hcp;
-                }
+            if(holeValue == "Front 9 Holes"){
+                for (var i = 0; i < columns; i++) {
+                    if(i < 9) {
+                        handicap = selectedCourse.course.holes[i].tee_boxes[0].hcp;
+                        handicapOut += handicap;
+                    }
 
-                if(i < 9){
-                    handicapOut += handicap;
-                }
-                else if (i > 9 && i < 19) {
-                    handicapIn += handicap;
-                }
-
-                if(i == 9) {
-                    $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicapOut + "</td>");
-                }
-                else if(i == 19) {
-                    $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicapIn + "</td>");
-                }
-                else if(i == 20) {
-                    handicapGrand = handicapIn + handicapOut;
-                    $("#handicap").append("<td id=handicapId" + i + "' class='tableHeader'>" + handicapGrand + "</td>");
-                }
-                else {
-                    $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicap + "</td>");
+                    if(i == 9) {
+                        $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicapOut + "</td>");
+                    } else {
+                        $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicap + "</td>");
+                    }
                 }
             }
 
+            else if(holeValue == "Back 9 Holes"){
+                for (var i = 10; i < columns + 10; i++) {
+                    if(i > 9 && i < 19) {
+                        handicap = selectedCourse.course.holes[i - 1].tee_boxes[0].hcp;
+                        handicapIn += handicap;
+                    }
+
+                    if(i == 19) {
+                        $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicapIn + "</td>");
+                    } else {
+                        $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicap + "</td>");
+                    }
+                }
+            }
+
+            else if(holeValue == "All 18 Holes"){
+                for (var i = 0; i < columns; i++) {
+                    if(i < 9) {
+                        handicap = selectedCourse.course.holes[i].tee_boxes[0].hcp;
+                    }
+                    else if(i > 9 && i < 19) {
+                        handicap = selectedCourse.course.holes[i - 1].tee_boxes[0].hcp;
+                    }
+
+                    if(i < 9){
+                        handicapOut += handicap;
+                    }
+                    else if (i > 9 && i < 19) {
+                        handicapIn += handicap;
+                    }
+
+                    if(i == 9) {
+                        $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicapOut + "</td>");
+                    }
+                    else if(i == 19) {
+                        $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicapIn + "</td>");
+                    }
+                    else if(i == 20) {
+                        handicapGrand = handicapIn + handicapOut;
+                        $("#handicap").append("<td id=handicapId" + i + "' class='tableHeader'>" + handicapGrand + "</td>");
+                    }
+                    else {
+                        $("#handicap").append("<td id='handicapId" + i + "' class='tableHeader'>" + handicap + "</td>");
+                    }
+                }
+            }
 
             init = true;
         }
