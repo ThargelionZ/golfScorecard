@@ -67,7 +67,7 @@ function loadCourse(theid) {
         if(numberOfHoles == 18){
             $("#holeAmount").append("<option class='holeOptions'>Front 9 Holes</option>" + "<option class='holeOptions'>Back 9 Holes</option>" + "<option class='holeOptions'>All 18 Holes</option>");
         } else {
-            $("#holeAmount").append("<option class='holeOptions'>Front 9 Holes</option>" + "<option class='holeOptions'>Back 9 Holes</option>");
+            $("#holeAmount").append("<option class='holeOptions'>Front 9 Holes</option>");
         }
     });
 }
