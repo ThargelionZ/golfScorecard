@@ -79,10 +79,10 @@ var holeValue;
 function loadHole() {
     resetCard();
     holeValue = $("#holeAmount").find(":selected").val();
-    if(holeValue == "Front 9 Holes" || holeValue== "Back 9 Holes"){
+    if(holeValue == "Front 9 Holes" || holeValue == "Back 9 Holes"){
         numberOfHoles = 9;
     }
-    else if(holeValue == "All 18 Holes") {
+    else if(holeValue == "All 18 Holes" || holeValue == "-") {
         numberOfHoles = 18;
     }
 }
@@ -144,7 +144,7 @@ function addPlayer(){
                 }
             }
 
-            else if(holeValue == "All 18 Holes"){
+            else {
                 for (var i = 0; i < numberOfHoles; i++) {
                     $("#holes").append("<td class='tableHeader'><strong>Hole " + (i + 1) + "</strong></td>");
                     if (i == 8) {
@@ -202,7 +202,7 @@ function addPlayer(){
                 }
             }
 
-            else if(holeValue == "All 18 Holes"){
+            else {
                 for (var i = 0; i < columns; i++) {
                     if(i < 9) {
                         yardage = selectedCourse.course.holes[i].tee_boxes[$("#teeTypes").val()].yards;
@@ -273,7 +273,7 @@ function addPlayer(){
                 }
             }
 
-            else if(holeValue == "All 18 Holes"){
+            else {
                 for (var i = 0; i < columns; i++) {
                     if(i < 9) {
                         par = selectedCourse.course.holes[i].tee_boxes[0].par;
@@ -344,7 +344,7 @@ function addPlayer(){
                 }
             }
 
-            else if(holeValue == "All 18 Holes"){
+            else {
                 for (var i = 0; i < columns; i++) {
                     if(i < 9) {
                         handicap = selectedCourse.course.holes[i].tee_boxes[0].hcp;
@@ -388,7 +388,7 @@ function addPlayer(){
             //Create the players themselves
 
             leftCard = $("#leftCard").html();
-            if (leftCard == "Click \"Add a Player\" to add players.") {
+            if (leftCard == "Click \"Initialize Card\" to create your card.") {
                 playerNumber = 0;
             }
             if (playerNumber == 0) {
@@ -511,7 +511,7 @@ function removePlayer(theid) {
     $("#message" + (playerAmount)).remove();
     playerAmount--;
     if($("#leftCard").html() == ""){
-        $("#leftCard").html("Click \"Add a Player\" to add players.");
+        $("#leftCard").html("Click \"Initialize Card\" to create your card.");
         $("#addPlayerButton").text("Initialize Card");
         $("#rightCard").css("display", "none");
         $("#leftCardHeadings").css("display", "none");
@@ -1095,7 +1095,7 @@ function resetCard() {
     errMaxPlayers = false;
     $("#selectCourseError").remove();
     $("#errorMessage").remove();
-    $("#leftCard").html("Click \"Add a Player\" to add players.");
+    $("#leftCard").html("Click \"Initialize Card\" to create your card.");
     $("#addPlayerButton").text("Initialize Card");
     $(".playerMessage").remove();
 }
