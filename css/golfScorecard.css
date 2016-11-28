@@ -21,7 +21,7 @@ h1, h2, h3 {
 h1 {
     background-color: black;
     color: white;
-    font-family: Centaur, Arial, "Times New Roman";
+    font-family: Arial, "Times New Roman";
     padding: 20px 41px;
 }
 
@@ -105,7 +105,7 @@ h1 {
     display: block;
     background-color: #05B5FF;
     border-radius: 20px;
-    font-family: Centaur, Arial, "Times New Roman";
+    font-family: Arial, "Times New Roman";
     height: 50px;
     margin: auto 0px auto 44px;
     padding-top: 12px;
@@ -124,7 +124,7 @@ h1 {
     display: block;
     background-color: #CC0000;
     border-radius: 20px;
-    font-family: Centaur, Arial, "Times New Roman";
+    font-family: Arial, "Times New Roman";
     height: 50px;
     margin: auto 0px auto 20px;
     padding-top: 12px;
@@ -143,7 +143,7 @@ h1 {
     display: block;
     background-color: gold;
     border-radius: 20px;
-    font-family: Centaur, Arial, "Times New Roman";
+    font-family: Arial, "Times New Roman";
     height: 50px;
     margin: auto 0px auto 20px;
     padding-top: 12px;
@@ -168,7 +168,7 @@ h1 {
 }
 
 .tableHeadings {
-    font-family: Centaur, Arial, "Times New Roman";
+    font-family: Arial, "Times New Roman";
     font-size: 14px;
     margin-bottom: 24px;
     font-weight: bold;
@@ -190,7 +190,7 @@ h1 {
 }
 
 #leftCard {
-    font-family: Centaur, Arial, "Times New Roman";
+    font-family: Arial, "Times New Roman";
     margin: 211px 0 0 30px;
     border-radius: 4px;
     padding: 0px 15px 0 15px;
@@ -201,7 +201,7 @@ h1 {
 -------------------------------------------*/
 
 #rightCard {
-    font-family: Centaur, Arial, "Times New Roman";
+    font-family: Arial, "Times New Roman";
     margin: 35px 100px 0 0;
     border-radius: 4px;
     padding: 0px 15px;
