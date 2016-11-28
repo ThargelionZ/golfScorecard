@@ -756,7 +756,7 @@ function validateInput(thevalue, theid) {
             if(!incomplete5){
                 compareToPar5 = totalOut5 - 36;
                 if(compareToPar5 < 0){
-                    $("#message6").text($("#name5").text() + ": Your score compared to par is +" + compareToPar5 + ". Well done! You are fit for the PGA!");
+                    $("#message6").text($("#name5").text() + ": Your score compared to par is " + compareToPar5 + ". Well done! You are fit for the PGA!");
                     $("#message6").css("color", "green");
                 }
                 else if(compareToPar5 == 0){
